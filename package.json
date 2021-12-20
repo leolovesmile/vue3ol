@@ -1,7 +1,15 @@
 {
-  "name": "@leolovesmile/vue3ol",
-  "version": "0.1.0",
+  "name": "@rsmap/vue3ol",
+  "version": "0.1.1",
   "description": "使用vue3风格封装后的 Openlayer 地图组件库。",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/leolovesmile/vue3ol"
+  },
+  "homepage": "https://github.com/leolovesmile/vue3ol",
+  "bugs": {
+    "url": "https://github.com/leolovesmile/vue3ol/issues"
+  },
   "keywords": [
     "前端",
     "web",
@@ -10,7 +18,7 @@
     "map",
     "gis"
   ],
-  "author": "gw onepiece",
+  "author": "gw rsmap",
   "license": "MIT",
   "private": false,
   "main": "dist/vue3ol.common.js",

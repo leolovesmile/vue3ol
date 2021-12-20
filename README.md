@@ -4,13 +4,15 @@
 >
 > 本组件库是源于 Github 上的开源组件库 [vue3-openlayers by Melih Altıntaş](https://github.com/MelihAltintas/vue3-openlayers) ，在其基础上根据自身的需求进行了定制，并且修复了一些问题。
 
-- npm package地址： https://www.npmjs.com/package/@leolovesmile/vue3ol
+- 源代码仓库地址： https://github.com/leolovesmile/vue3ol
+
+- npm package地址： https://www.npmjs.com/package/@rsmap/vue3ol
 
 ## 安装
 
 ```bash
 # install current vue3ol version 
-npm install @leolovesmile/vue3ol
+npm install @rsmap/vue3ol
 or
-yarn add @leolovesmile/vue3ol
+yarn add @rsmap/vue3ol
 ```
