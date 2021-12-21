@@ -16,3 +16,9 @@ npm install @rsmap/vue3ol
 or
 yarn add @rsmap/vue3ol
 ```
+
+## change logs
+
+### 2021年12月21日
+- `ol-swipe-control` bug修复：卷帘的图层列表变化时，卷帘未的更新
+- `ol-source-image-arcgis-rest`: 增加 arcgis rest 类型的栅格源

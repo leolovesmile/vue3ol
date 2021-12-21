@@ -7,9 +7,7 @@
 <script>
 import Swipe from 'ol-ext/control/Swipe';
 import useControl from '@/composables/useControl'
-import {
-    toRefs
-} from "vue"
+import { watch, toRefs } from "vue"
 export default {
     name: 'ol-swipe-control',
     setup(props,context) {
@@ -21,6 +19,16 @@ export default {
             layerList
         } = toRefs(props)
 
+        watch(layerList, (newVal, oldVal)=>{
+            oldVal.forEach((layer) => {
+                control.value.removeLayer(layer)
+            })
+
+            newVal.forEach((layer,index) => {
+                control.value.addLayer(layer,index==1 ? true:false)
+            })
+        })
+
         layerList.value.forEach((layer,index) => {
             control.value.addLayer(layer,index==1 ? true:false)
         })
@@ -28,7 +36,6 @@ export default {
         return {
             control
         }
-
     },
     props: {
         layerList: {

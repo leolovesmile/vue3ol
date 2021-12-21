@@ -1,7 +1,7 @@
 {
   "name": "@rsmap/vue3ol",
-  "version": "0.1.1",
-  "description": "使用vue3风格封装后的 Openlayer 地图组件库。",
+  "version": "0.1.2",
+  "description": "使用 vue3 风格封装后的 Openlayer 地图组件库。",
   "repository": {
     "type": "git",
     "url": "https://github.com/leolovesmile/vue3ol"
@@ -12,6 +12,7 @@
   },
   "keywords": [
     "前端",
+    "地图",
     "web",
     "vue3",
     "openlayers",
@@ -23,7 +24,7 @@
   "private": false,
   "main": "dist/vue3ol.common.js",
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service serve", 
     "build": "vue-cli-service build --target lib --name vue3ol src/index.js",
     "build-report": "vue-cli-service build --report",
     "lint": "vue-cli-service lint",
