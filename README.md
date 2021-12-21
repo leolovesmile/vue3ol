@@ -8,8 +8,9 @@
 
 - npm package地址： https://www.npmjs.com/package/@rsmap/vue3ol
 
-## 安装
+## 安装与使用
 
+### 安装
 ```bash
 # install current vue3ol version 
 npm install @rsmap/vue3ol
@@ -17,8 +18,24 @@ or
 yarn add @rsmap/vue3ol
 ```
 
+### 使用
+- 在 main.js (或其它入口) 引入组件，关键代码如下：
+```
+import OpenLayersMap from '@rsmap/vue3ol'
+import '@rsmap/vue3ol/dist/vue3ol.css'
+
+
+app.use(OpenLayersMap)
+```
+- 由于目前没有类型定义文件，故创建一个 `d.ts` 文件（或使用已有的文件），文件内加入如下代码来生命module
+```
+declare module '@rsmap/vue3ol'
+```
+
+- 接下来便可以使用本组件库了
+
 ## change logs
 
 ### 2021年12月21日
-- `ol-swipe-control` bug修复：卷帘的图层列表变化时，卷帘未的更新
+- `ol-swipe-control` bug修复：卷帘的图层列表变化时，卷帘未更新
 - `ol-source-image-arcgis-rest`: 增加 arcgis rest 类型的栅格源
