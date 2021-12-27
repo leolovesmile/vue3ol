@@ -7,36 +7,38 @@ import SourceCluster from './SourceCluster.vue'
 import SourceBingMaps from './SourceBingMaps.vue'
 import SourceTianDiTu from './SourceTianDiTu.vue'
 import SourceImageWMS from './SourceImageWMS.vue'
+import SourceImageArcgisRest from './SourceImageArcgisRest.vue'
 
-function install (app) {
+function install(app) {
 
-    if (install.installed) {
-      return
-    }
-
-    install.installed = true
-  
-    app.component(SourceXYZ.name, SourceXYZ)
-    app.component(SourceOSM.name, SourceOSM)
-    app.component(SourceImageStatic.name, SourceImageStatic)
-    app.component(SourceWMTS.name, SourceWMTS)
-    app.component(SourceVector.name, SourceVector)
-    app.component(SourceCluster.name, SourceCluster)
-    app.component(SourceBingMaps.name, SourceBingMaps)
-    app.component(SourceTianDiTu.name, SourceTianDiTu)
-    app.component(SourceImageWMS.name, SourceImageWMS)
+  if (install.installed) {
+    return
   }
-  
-  export default install
-  
-  export {
-    install,
-    SourceXYZ,
-    SourceOSM,
-    SourceImageStatic,
-    SourceWMTS,
-    SourceVector,
-    SourceCluster,
-    SourceTianDiTu,
-    SourceImageWMS,
-  }
+
+  install.installed = true
+
+  app.component(SourceXYZ.name, SourceXYZ)
+  app.component(SourceOSM.name, SourceOSM)
+  app.component(SourceImageStatic.name, SourceImageStatic)
+  app.component(SourceWMTS.name, SourceWMTS)
+  app.component(SourceVector.name, SourceVector)
+  app.component(SourceCluster.name, SourceCluster)
+  app.component(SourceBingMaps.name, SourceBingMaps)
+  app.component(SourceTianDiTu.name, SourceTianDiTu)
+  app.component(SourceImageWMS.name, SourceImageWMS)
+  app.component(SourceImageArcgisRest.name, SourceImageArcgisRest)
+}
+
+export default install
+
+export {
+  install,
+  SourceXYZ,
+  SourceOSM,
+  SourceImageStatic,
+  SourceWMTS,
+  SourceVector,
+  SourceCluster,
+  SourceTianDiTu,
+  SourceImageWMS,
+}
