@@ -14,7 +14,7 @@
 ```bash
 # install current vue3ol version 
 npm install @rsmap/vue3ol
-or
+# or
 yarn add @rsmap/vue3ol
 ```
 
@@ -27,7 +27,7 @@ import '@rsmap/vue3ol/dist/vue3ol.css'
 
 app.use(OpenLayersMap)
 ```
-- 由于目前没有类型定义文件，故创建一个 `d.ts` 文件（或使用已有的文件），文件内加入如下代码来生命module
+- 由于目前没有类型定义文件，故创建一个 `d.ts` 文件（或使用已有的文件），文件内加入如下代码来声明module
 ```
 declare module '@rsmap/vue3ol'
 ```
