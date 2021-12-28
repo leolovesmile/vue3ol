@@ -36,6 +36,10 @@ declare module '@rsmap/vue3ol'
 
 ## change logs
 
+### 2021年12月28日
+- 组件`ol-source-image-wms`增加了`time`参数
+- 修复了 `SourceWMTS.vue` 的一个bug
+
 ### 2021年12月21日
 - `ol-swipe-control` bug修复：卷帘的图层列表变化时，卷帘未更新
 - `ol-source-image-arcgis-rest`: 增加 arcgis rest 类型的栅格源
