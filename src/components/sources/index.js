@@ -3,6 +3,7 @@ import SourceOSM from './SourceOSM.vue'
 import SourceImageStatic from './SourceImageStatic.vue'
 import SourceWMTS from './SourceWMTS.vue'
 import SourceVector from './SourceVector.vue'
+import SourceVectorTile from './SourceVectorTile.vue'
 import SourceCluster from './SourceCluster.vue'
 import SourceBingMaps from './SourceBingMaps.vue'
 import SourceTianDiTu from './SourceTianDiTu.vue'
@@ -22,6 +23,7 @@ function install(app) {
   app.component(SourceImageStatic.name, SourceImageStatic)
   app.component(SourceWMTS.name, SourceWMTS)
   app.component(SourceVector.name, SourceVector)
+  app.component(SourceVectorTile.name, SourceVectorTile)
   app.component(SourceCluster.name, SourceCluster)
   app.component(SourceBingMaps.name, SourceBingMaps)
   app.component(SourceTianDiTu.name, SourceTianDiTu)
@@ -37,7 +39,7 @@ export {
   SourceOSM,
   SourceImageStatic,
   SourceWMTS,
-  SourceVector,
+  SourceVectorTile,
   SourceCluster,
   SourceTianDiTu,
   SourceImageWMS,

@@ -1107,7 +1107,7 @@
 
 "@mapbox/jsonlint-lines-primitives@~2.0.2":
   version "2.0.2"
-  resolved "https://registry.nlark.com/@mapbox/jsonlint-lines-primitives/download/@mapbox/jsonlint-lines-primitives-2.0.2.tgz#ce56e539f83552b58d10d672ea4d6fc9adc7b234"
+  resolved "https://registry.npmmirror.com/@mapbox/jsonlint-lines-primitives/download/@mapbox/jsonlint-lines-primitives-2.0.2.tgz#ce56e539f83552b58d10d672ea4d6fc9adc7b234"
   integrity sha1-zlblOfg1UrWNENZy6k1vya3HsjQ=
 
 "@mapbox/mapbox-gl-style-spec@^13.20.1":
@@ -1131,7 +1131,7 @@
 
 "@mapbox/unitbezier@^0.0.0":
   version "0.0.0"
-  resolved "https://registry.npmmirror.com/@mapbox/unitbezier/download/@mapbox/unitbezier-0.0.0.tgz?cache=0&sync_timestamp=1635154914922&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2F%40mapbox%2Funitbezier%2Fdownload%2F%40mapbox%2Funitbezier-0.0.0.tgz#15651bd553a67b8581fb398810c98ad86a34524e"
+  resolved "https://registry.npmmirror.com/@mapbox/unitbezier/download/@mapbox/unitbezier-0.0.0.tgz#15651bd553a67b8581fb398810c98ad86a34524e"
   integrity sha1-FWUb1VOme4WB+zmIEMmK2Go0Uk4=
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
@@ -1169,9 +1169,9 @@
     fastq "^1.6.0"
 
 "@petamoriken/float16@^3.4.7":
-  version "3.5.11"
-  resolved "https://registry.npmmirror.com/@petamoriken/float16/download/@petamoriken/float16-3.5.11.tgz#69744fde033692c09dbb02191e0c391f8c857e30"
-  integrity sha512-aKJaQhvWcP4XRo4eb34VygcqNsE1+Ej5687oexkK+qYWC7tejxaWRkAfE54Ze3xQGnvwXHZ5Ahx6CWq5sS4q7Q==
+  version "3.6.1"
+  resolved "https://registry.npmmirror.com/@petamoriken/float16/download/@petamoriken/float16-3.6.1.tgz#c49ae91e9fa26a1e3c15af7f95e2efa085100151"
+  integrity sha512-SI0ovmGj/cUKYvxwbGl5TGDdFFCPLK3/zdOS0RCoYeYJMQZojsoiljIRwnBKxPFk/IsxI160Pk9n42O+XihQdw==
 
 "@polka/url@^0.5.0":
   version "0.5.0"
@@ -6630,22 +6630,22 @@ ol-ext@^3.2.4:
   resolved "https://registry.npmmirror.com/ol-ext/download/ol-ext-3.2.18.tgz#5a4a76b4d1271b9e2aef2e181478cba132895276"
   integrity sha512-gKdNvUmHhwDT9BrXrkcmgHlCHA1+sVcemdumFwvjtj2fPRoMCs8gh2uHhu1HZv2ekl0FRqZKDWIkAv7CRLx99g==
 
-ol-mapbox-style@^6.5.1:
-  version "6.8.1"
-  resolved "https://registry.npmmirror.com/ol-mapbox-style/download/ol-mapbox-style-6.8.1.tgz#12accc9aef73ba975aac54e0b7fd64e6a62ce589"
-  integrity sha512-HD3FNFzFiBptEwiLIVna7H/WSpv/cN99xMmIErcvqv/r4XLwWS/8VKti8w6moVPV28Fg2QmitXvaG3okedMU7w==
+ol-mapbox-style@^6.8.2:
+  version "6.8.2"
+  resolved "https://registry.npmmirror.com/ol-mapbox-style/download/ol-mapbox-style-6.8.2.tgz#933db57ab2c7ab0d177aecea634a86359f151176"
+  integrity sha512-iObsecfgrCoMakFCwWWRTYXMy0X1bedJwbTgn6Im7igto+obRgmUoy/TZGBHQY1xEBczV4fVAzyyOkzQUNa8ug==
   dependencies:
     "@mapbox/mapbox-gl-style-spec" "^13.20.1"
     mapbox-to-css-font "^2.4.0"
     webfont-matcher "^1.1.0"
 
-ol@^6.6.1:
-  version "6.9.0"
-  resolved "https://registry.npmmirror.com/ol/download/ol-6.9.0.tgz#3e1b39a76f99ede117ad79e66464698d6915df0b"
-  integrity sha1-Phs5p2+Z7eEXrXnmZGRpjWkV3ws=
+ol@^6.12.0:
+  version "6.12.0"
+  resolved "https://registry.npmmirror.com/ol/download/ol-6.12.0.tgz#0de51abad0aaeb0eca41cba3c6d26ee485a3e92b"
+  integrity sha512-HR87aV//64aiGWbgzfsyRF5zFG+1nM1keRE4SugY0vmYyG/jjoij8qh3uaFHkFNQThdAy99sgLiQwTFk6AvGgw==
   dependencies:
     geotiff "^1.0.8"
-    ol-mapbox-style "^6.5.1"
+    ol-mapbox-style "^6.8.2"
     pbf "3.2.1"
     rbush "^3.0.1"
 
@@ -7603,7 +7603,7 @@ queue-microtask@^1.2.2:
 
 quickselect@^2.0.0:
   version "2.0.0"
-  resolved "https://registry.nlark.com/quickselect/download/quickselect-2.0.0.tgz#f19680a486a5eefb581303e023e98faaf25dd018"
+  resolved "https://registry.npmmirror.com/quickselect/download/quickselect-2.0.0.tgz#f19680a486a5eefb581303e023e98faaf25dd018"
   integrity sha1-8ZaApIal7vtYEwPgI+mPqvJd0Bg=
 
 raf@^3.4.1:
@@ -7858,7 +7858,7 @@ resolve-from@^4.0.0:
 
 resolve-protobuf-schema@^2.1.0:
   version "2.1.0"
-  resolved "https://registry.nlark.com/resolve-protobuf-schema/download/resolve-protobuf-schema-2.1.0.tgz#9ca9a9e69cf192bbdaf1006ec1973948aa4a3758"
+  resolved "https://registry.npmmirror.com/resolve-protobuf-schema/download/resolve-protobuf-schema-2.1.0.tgz#9ca9a9e69cf192bbdaf1006ec1973948aa4a3758"
   integrity sha1-nKmp5pzxkrva8QBuwZc5SKpKN1g=
   dependencies:
     protocol-buffers-schema "^3.3.1"

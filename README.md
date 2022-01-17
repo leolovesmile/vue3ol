@@ -35,6 +35,8 @@ declare module '@rsmap/vue3ol'
 - 接下来便可以使用本组件库了
 
 ## change logs
+### 2022年01月17日
+- 新增矢量瓦片组件`ol-vector-tile-layer`和`ol-source-vector-tile`
 
 ### 2021年12月28日
 - 组件`ol-source-image-wms`增加了`time`参数
