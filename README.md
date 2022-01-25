@@ -35,6 +35,9 @@ declare module '@rsmap/vue3ol'
 - 接下来便可以使用本组件库了
 
 ## change logs
+### 2022年01月25日
+- 合并代码，加入`ol-projection-register`组件，支持注册新的projection
+
 ### 2022年01月17日
 - 新增矢量瓦片组件`ol-vector-tile-layer`和`ol-source-vector-tile`
 
