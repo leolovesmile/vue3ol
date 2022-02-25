@@ -13,7 +13,8 @@ import {
     onMounted,
     onUnmounted,
     provide,
-    computed
+    computed,
+    markRaw
 } from 'vue'
 
 import usePropsAsObjectProperties from '@/composables/usePropsAsObjectProperties'
@@ -23,6 +24,11 @@ export default {
     setup(props) {
 
         const layer = inject('vectorLayer');
+
+        if(props.once && props.features && props.features.length > 0) {
+            // props.features = toRaw(props.features)
+            markRaw(props.features)
+        }
 
         const {
             properties
@@ -95,6 +101,11 @@ export default {
         useSpatialIndex: {
             type: Boolean,
             default: true
+
+        },
+        once: {
+            type: Boolean,
+            default: false
 
         },
         wrapX: {

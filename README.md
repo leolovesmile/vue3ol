@@ -35,6 +35,12 @@ declare module '@rsmap/vue3ol'
 - 接下来便可以使用本组件库了
 
 ## change logs
+
+### 2022年2月25日
+- `ol-source-vector` 增加属性 `once`，若该属性为`true`，会将`features`属性`markRaw`[参考](https://v3.cn.vuejs.org/api/basic-reactivity.html#markraw)，可明显提升性能
+- `ol-source-xyz` 增加属性 `attributions` 和属性 `tileGrid`
+- 增加几个与webgl相关的组件：`ol-webglpoints-layer`, `ol-webgl-tile-layer`, `ol-source-webglpoints`
+- 修复组件`ol-overlay`的属性`positioning`的类型的bug
 ### 2022年01月25日
 - 合并代码，加入`ol-projection-register`组件，支持注册新的projection
 
