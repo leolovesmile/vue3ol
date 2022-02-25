@@ -9,6 +9,7 @@ import SourceBingMaps from './SourceBingMaps.vue'
 import SourceTianDiTu from './SourceTianDiTu.vue'
 import SourceImageWMS from './SourceImageWMS.vue'
 import SourceImageArcgisRest from './SourceImageArcgisRest.vue'
+import SourceWebglPoints from './SourceWebglPoints.vue'
 
 function install(app) {
 
@@ -29,6 +30,7 @@ function install(app) {
   app.component(SourceTianDiTu.name, SourceTianDiTu)
   app.component(SourceImageWMS.name, SourceImageWMS)
   app.component(SourceImageArcgisRest.name, SourceImageArcgisRest)
+  app.component(SourceWebglPoints.name, SourceWebglPoints)
 }
 
 export default install
@@ -40,7 +42,9 @@ export {
   SourceImageStatic,
   SourceWMTS,
   SourceVectorTile,
+  SourceVector,
   SourceCluster,
   SourceTianDiTu,
   SourceImageWMS,
+  SourceWebglPoints
 }

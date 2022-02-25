@@ -49,6 +49,9 @@ export default {
         }
     },
     props: {
+        attributions: {
+            type: [String, Array],
+        },
         url: {
             type: String
         },
@@ -91,7 +94,10 @@ export default {
         },
         transition: {
             type: Number
-        }
+        },
+        tileGrid: {
+            type: Object,
+        },
     }
 }
 </script>
