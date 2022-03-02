@@ -68,10 +68,10 @@ export default {
             type: Boolean,
             default: true
         },
-        // projection: {
-        //     type: String,
-        //     default: 'EPSG:3857'
-        // },
+        projection: {
+            type: String,
+            default: 'EPSG:3857'
+        },
         url: {
             type: [String, Function]
         },

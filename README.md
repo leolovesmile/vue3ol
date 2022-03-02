@@ -35,6 +35,8 @@ declare module '@rsmap/vue3ol'
 - 接下来便可以使用本组件库了
 
 ## change logs
+### 2022年3月2日
+- `ol-source-vector-tile`提供属性`projection`，用于配置**tile grid**的projection
 
 ### 2022年2月25日
 - `ol-source-vector` 增加属性 `once`，若该属性为`true`，会将`features`属性`markRaw`[参考](https://v3.cn.vuejs.org/api/basic-reactivity.html#markraw)，可明显提升性能
