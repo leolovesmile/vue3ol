@@ -128,7 +128,7 @@ export default {
     },
     requestEncoding: {
       type: String,
-      default: "REST"
+      default: "KVP"
     },
     urls: {
       type: Array
