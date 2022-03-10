@@ -35,6 +35,8 @@ declare module '@rsmap/vue3ol'
 - 接下来便可以使用本组件库了
 
 ## change logs
+## 2022年3月10日
+- 新增`ol-mvt-style-layer`，可以加载mapbox style定义的矢量瓦片
 ### 2022年3月2日
 - `ol-source-vector-tile`提供属性`projection`，用于配置**tile grid**的projection
 
