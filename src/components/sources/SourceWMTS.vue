@@ -126,6 +126,10 @@ export default {
     url: {
       type: String
     },
+    requestEncoding: {
+      type: String,
+      default: "REST"
+    },
     urls: {
       type: Array
     },
