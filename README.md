@@ -35,7 +35,9 @@ declare module '@rsmap/vue3ol'
 - 接下来便可以使用本组件库了
 
 ## change logs
-## 2022年3月10日
+### 2022年3月16日
+- 组件`ol-source-wmts`的层级做了优化
+### 2022年3月10日
 - 新增`ol-mvt-style-layer`，可以加载mapbox style定义的矢量瓦片
 - `ol-source-wmts`组件增加`requestEncoding`属性
 
