@@ -5,8 +5,9 @@
 </template>
 
 <script>
-import WMTS from 'ol/source/WMTS';
 import Projection from 'ol/proj/Projection';
+import WMTS, { optionsFromCapabilities } from 'ol/source/WMTS'
+import WMTSCapabilities from 'ol/format/WMTSCapabilities'
 import WMTSTileGrid from 'ol/tilegrid/WMTS';
 import {
   get as getProjection
@@ -20,7 +21,8 @@ import {
   onMounted,
   onUnmounted,
   watch,
-  computed
+  computed,
+  ref
 } from 'vue'
 import usePropsAsObjectProperties from '@/composables/usePropsAsObjectProperties'
 export default {
@@ -34,11 +36,10 @@ export default {
     const origin = computed(() => getTopLeft(extent.value));
     const size = computed(() => getWidth(extent.value) / 256);
 
-
     const getTileGrid = computed(() => {
       const resolutions = new Array(19);
       const matrixIds = new Array(19);
-      for (let z = 0; z < 14; ++z) {
+      for (let z = 0; z < 19; ++z) {
         resolutions[z] = size.value / Math.pow(2, z);
         matrixIds[z] = z;
       }
@@ -50,13 +51,42 @@ export default {
       });
     })
 
+    const getWmtsOptionFromCapabilitiesUrl = async () => {
+        if(props.capabilitiesUrl) {
+            const parser = new WMTSCapabilities();
+            const response =await fetch(props.capabilitiesUrl);
+            if(response.status!=200) {
+              throw 'http error when trying to get wmts meta info'
+            }
+            const wmtsXml = await response.text();
+            const result = parser.read(wmtsXml);
+            // in case that `<Style>` tags are missed, create default ones
+            for(let layer of result.Contents.Layer){
+              if(!layer.Style){
+                layer.Style = [{Identifier: "default",isDefault: true}]
+                console.debug(`Layer ${layer.Identifier} has no Style defined, create a default one.`)
+              }
+            }
+            const options = optionsFromCapabilities(result, {
+              layer: props.layer??result.Contents.Layer[0].Identifier
+            });
+          return options
+        } else {
+          return {}
+        }
+    }
+
+    const wmtsOptionFromCapabilitiesUrl = ref({})
+
     const source = computed(() => {
       return new WMTS({
+        tileGrid: properties.tileGrid || getTileGrid.value,
         ...properties,
         projection: typeof properties.projection === 'string' ? properties.projection : new Projection({
           ...properties.projection
         }),
-        tileGrid: properties.tileGrid || getTileGrid.value
+        ...wmtsOptionFromCapabilitiesUrl.value,
+        wrapX: properties.wrapX
       })
     })
 
@@ -68,7 +98,8 @@ export default {
       tileLayer.value.setSource(source.value)
     })
 
-    onMounted(() => {
+    onMounted(async () => {
+      wmtsOptionFromCapabilitiesUrl.value = await getWmtsOptionFromCapabilitiesUrl()
       tileLayer.value.setSource(source.value)
     })
 
@@ -124,16 +155,19 @@ export default {
     url: {
       type: String
     },
+    urls: {
+      type: Array
+    },
+    capabilitiesUrl: {
+      type: String
+    },
     requestEncoding: {
       type: String,
       default: "KVP"
     },
-    urls: {
-      type: Array
-    },
     wrapX: {
       type: Boolean,
-      default: false
+      default: true
     },
     transition: {
       type: Number
@@ -153,7 +187,6 @@ export default {
     tileGrid: {
       type: Object
     }
-
   }
 }
 </script>

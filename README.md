@@ -35,6 +35,9 @@ declare module '@rsmap/vue3ol'
 - 接下来便可以使用本组件库了
 
 ## change logs
+### 2022年3月17日
+- 组件`ol-source-wmts`增加了属性`capabilitiesUrl`，以支持通过wmts的元数据（GetCapabilities）来加载wmts图层
+
 ### 2022年3月16日
 - 组件`ol-source-wmts`的层级做了优化
 ### 2022年3月10日
