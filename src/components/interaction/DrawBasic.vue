@@ -252,7 +252,7 @@ export default {
     // 是否开启测量工具
     isMeasure: {
       type: Boolean,
-      default: true
+      default: false
     }
   }
 
