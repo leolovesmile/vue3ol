@@ -60,16 +60,25 @@ export default {
             }
             const wmtsXml = await response.text();
             const result = parser.read(wmtsXml);
+
+            // use the first layer by default if no layer is specified
+            const layerName = props.layer??result.Contents.Layer[0].Identifier
+            const wmtsConfig = {layer: layerName}
             // in case that `<Style>` tags are missed, create default ones
             for(let layer of result.Contents.Layer){
               if(!layer.Style){
                 layer.Style = [{Identifier: "default",isDefault: true}]
                 console.debug(`Layer ${layer.Identifier} has no Style defined, create a default one.`)
               }
+
+              // to fix a bug that the "TileMatrixSetLink" node of layer is not correctly parsed from the wmts capabilities xml by openlayers
+              if(props.matrixSet && layer.Identifier === layerName) {
+                layer.TileMatrixSetLink = [{"TileMatrixSet": props.matrixSet}]
+                wmtsConfig.matrixSet = props.matrixSet
+              }
             }
-            const options = optionsFromCapabilities(result, {
-              layer: props.layer??result.Contents.Layer[0].Identifier
-            });
+
+            const options = optionsFromCapabilities(result, wmtsConfig);
           return options
         } else {
           return {}
@@ -80,11 +89,11 @@ export default {
 
     const source = computed(() => {
       return new WMTS({
-        tileGrid: properties.tileGrid || getTileGrid.value,
         ...properties,
         projection: typeof properties.projection === 'string' ? properties.projection : new Projection({
           ...properties.projection
         }),
+        tileGrid: properties.tileGrid || getTileGrid.value,
         ...wmtsOptionFromCapabilitiesUrl.value,
         wrapX: properties.wrapX
       })
