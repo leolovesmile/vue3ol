@@ -5,7 +5,6 @@
 </template>
 
 <script>
-
 import Projection from 'ol/proj/Projection';
 import WMTS, { optionsFromCapabilities } from 'ol/source/WMTS'
 import WMTSCapabilities from 'ol/format/WMTSCapabilities'
@@ -52,8 +51,6 @@ export default {
       });
     })
 
-
-
     const getWmtsOptionFromCapabilitiesUrl = async () => {
       if (props.capabilitiesUrl) {
         const parser = new WMTSCapabilities();
@@ -86,7 +83,6 @@ export default {
       } else {
         return {}
       }
-
     }
 
     const wmtsOptionFromCapabilitiesUrl = ref({})
@@ -94,22 +90,20 @@ export default {
     const source = computed(() => {
       return new WMTS({
         ...properties,
-        tileGrid: properties.tileGrid || getTileGrid.value,
         projection: typeof properties.projection === 'string' ? properties.projection : new Projection({
           ...properties.projection
         }),
+        tileGrid: properties.tileGrid || getTileGrid.value,
         ...wmtsOptionFromCapabilitiesUrl.value,
         wrapX: properties.wrapX
       })
     })
 
-
-
     watch(source, () => {
       tileLayer.value.setSource(source.value)
     })
 
-    watch(tileLayer, async () => {
+    watch(tileLayer, () => {
       tileLayer.value.setSource(source.value)
     })
 
@@ -124,8 +118,7 @@ export default {
 
     return {
       tileLayer,
-      source,
-
+      source
     }
   },
   props: {
