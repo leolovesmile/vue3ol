@@ -35,6 +35,10 @@ declare module '@rsmap/vue3ol'
 - 接下来便可以使用本组件库了
 
 ## change logs
+
+### 2022年3月25日
+- 增加`ol-basic-draw`组件
+- 组件`ol-source-wmts`绕过了openlayers自身的一个bug
 ### 2022年3月17日
 - 组件`ol-source-wmts`增加了属性`capabilitiesUrl`，以支持通过wmts的元数据（GetCapabilities）来加载wmts图层
 
