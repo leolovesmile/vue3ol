@@ -5,6 +5,7 @@
 </template>
 
 <script>
+
 import Projection from 'ol/proj/Projection';
 import WMTS, { optionsFromCapabilities } from 'ol/source/WMTS'
 import WMTSCapabilities from 'ol/format/WMTSCapabilities'
@@ -51,37 +52,39 @@ export default {
       });
     })
 
+
+
     const getWmtsOptionFromCapabilitiesUrl = async () => {
-        if(props.capabilitiesUrl) {
-            const parser = new WMTSCapabilities();
-            const response =await fetch(props.capabilitiesUrl);
-            if(response.status!=200) {
-              throw 'http error when trying to get wmts meta info'
-            }
-            const wmtsXml = await response.text();
-            const result = parser.read(wmtsXml);
-            // in case that `<Style>` tags are missed, create default ones
-            for(let layer of result.Contents.Layer){
-              if(!layer.Style){
-                layer.Style = [{Identifier: "default",isDefault: true}]
-                console.debug(`Layer ${layer.Identifier} has no Style defined, create a default one.`)
-              }
-            }
-            const options = optionsFromCapabilities(result, {
-              layer: props.layer??result.Contents.Layer[0].Identifier
-            });
-          return options
-        } else {
-          return {}
+      if (props.capabilitiesUrl) {
+        const parser = new WMTSCapabilities();
+        const response = await fetch(props.capabilitiesUrl);
+        if (response.status != 200) {
+          throw 'http error when trying to get wmts meta info'
         }
+        const wmtsXml = await response.text();
+        const result = parser.read(wmtsXml);
+        // in case that `<Style>` tags are missed, create default ones
+        for (let layer of result.Contents.Layer) {
+          if (!layer.Style) {
+            layer.Style = [{ Identifier: "default", isDefault: true }]
+            console.debug(`Layer ${layer.Identifier} has no Style defined, create a default one.`)
+          }
+        }
+        const options = optionsFromCapabilities(result, {
+          layer: props.layer ?? result.Contents.Layer[0].Identifier
+        });
+        return options
+      } else {
+        return {}
+      }
     }
 
     const wmtsOptionFromCapabilitiesUrl = ref({})
 
     const source = computed(() => {
       return new WMTS({
-        tileGrid: properties.tileGrid || getTileGrid.value,
         ...properties,
+        tileGrid: properties.tileGrid || getTileGrid.value,
         projection: typeof properties.projection === 'string' ? properties.projection : new Projection({
           ...properties.projection
         }),
@@ -90,11 +93,13 @@ export default {
       })
     })
 
+
+
     watch(source, () => {
       tileLayer.value.setSource(source.value)
     })
 
-    watch(tileLayer, () => {
+    watch(tileLayer, async () => {
       tileLayer.value.setSource(source.value)
     })
 
@@ -109,7 +114,8 @@ export default {
 
     return {
       tileLayer,
-      source
+      source,
+
     }
   },
   props: {
