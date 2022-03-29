@@ -59,6 +59,10 @@ export default {
           throw 'http error when trying to get wmts meta info'
         }
         const wmtsXml = await response.text();
+        if(wmtsXml.indexOf('<Capabilities') < 0){
+          throw 'it looks like that this is not a valid wmts Capabilities xml file'
+        }
+        
         const result = parser.read(wmtsXml);
 
         // use the first layer by default if no layer is specified
