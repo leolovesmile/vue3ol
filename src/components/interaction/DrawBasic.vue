@@ -1,13 +1,5 @@
 
 <template lang="">
-     <ol-overlay v-for="(x,index) in overLayOptions" :key="index" :position='x.position' :offset='[-50,5]'>
-            <!-- eslint-disable-next-line vue/no-unused-vars -->
-    <template  v-slot="slotProps">
-            <div class="overlay-content" >
-                <p v-html="x.html"></p>
-            </div>
-        </template>
-    </ol-overlay >
 <slot>
 
 </slot>
@@ -21,26 +13,27 @@ import {
   onMounted,
   onUnmounted,
   toRefs,
-  ref
-  //computed
 } from 'vue'
 
 import Draw from 'ol/interaction/Draw';
 import { createBox } from 'ol/interaction/Draw';
 import { getArea, getLength } from 'ol/sphere';
 import { LineString, Polygon } from 'ol/geom';
-
+import Overlay from 'ol/Overlay';
+import { unByKey } from 'ol/Observable';
 export default {
   name: 'ol-basic-draw',
   emits: ["drawstart", "drawend"],
   setup (props, {
     emit
   }) {
-
+    const measureTooltipMap = []
     const map = inject("map");
     const source = inject("vectorSource");
-    let overLayOptions = ref([{}])
-    let index = 0
+    let measureTooltipElement;
+    let measureTooltip;
+    let helpTooltipElement;
+    let helpTooltip;
     const {
       type,
       clickTolerance,
@@ -56,11 +49,11 @@ export default {
       freehand,
       freehandCondition,
       wrapX, drawShapeMore,
-      isMeasure
+      isMeasure, disabled
     } = toRefs(props);
 
     let createDraw = () => {
-
+      let listener;
       let draw = new Draw({
         source: source.value,
         type: type.value == 'rectangle' ? 'Circle' : type.value,
@@ -79,15 +72,13 @@ export default {
         freehandCondition: freehandCondition.value,
         wrapX: wrapX.value,
       });
-      //   let listener = null;
       draw.on('drawstart', (event) => {
         //   如果开启测量工具
         if (isMeasure.value) {
-          overLayOptions.value.push({ position: [], html: '' })
+          createMeasureTooltip();
           const sketch = event.feature;
           let tooltipCoord = event.coordinate;
-          sketch.getGeometry().on('change', (evt) => {
-
+          listener = sketch.getGeometry().on('change', (evt) => {
             const geom = evt.target;
             let output;
             if (geom instanceof Polygon) {
@@ -97,7 +88,8 @@ export default {
               output = formatLength(geom);
               tooltipCoord = geom.getLastCoordinate();
             }
-            overLayOptions.value[index] = { position: tooltipCoord, html: output }
+            measureTooltipElement.innerHTML = output;
+            measureTooltip.setPosition(tooltipCoord);
           });
         }
         emit('drawstart', event)
@@ -106,11 +98,15 @@ export default {
       draw.on('drawend', (event) => {
         //   如果开启测量工具
         if (isMeasure.value) {
-          index++
+          measureTooltipElement.className = 'ol-tooltip ol-tooltip-static';
+          measureTooltip.setOffset([0, -7]);
+          measureTooltipElement = null;
+          unByKey(listener);
         }
-
         if (!drawShapeMore.value) {
           map.removeInteraction(draw);
+          map.un('pointermove', pointerMoveHandler)
+          map.removeOverlay(helpTooltip)
         }
         emit('drawend', event)
 
@@ -120,9 +116,9 @@ export default {
 
     };
     // 测距
-    // eslint-disable-next-line no-unused-vars
     const formatLength = (line) => {
-      const length = getLength(line);
+      const sourceProj = map.getView().getProjection();//获取投影坐标系
+      const length = getLength(line, { projection: sourceProj });
       let output;
       if (length > 100) {
         output = Math.round((length / 1000) * 100) / 100 + ' ' + 'km';
@@ -131,11 +127,40 @@ export default {
       }
       return output;
     };
+    const createHelpTooltip = () => {
+      if (helpTooltipElement) {
+        helpTooltipElement.parentNode.removeChild(helpTooltipElement);
+      }
+      helpTooltipElement = document.createElement('div');
+      helpTooltipElement.className = 'ol-tooltip hidden';
+      helpTooltip = new Overlay({
+        element: helpTooltipElement,
+        offset: [15, 0],
+        positioning: 'center-left',
+      });
+      map.addOverlay(helpTooltip);
+    }
+    const createMeasureTooltip = () => {
+      if (measureTooltipElement) {
+        measureTooltipElement.parentNode.removeChild(measureTooltipElement);
+      }
+      measureTooltipElement = document.createElement('div');
+      measureTooltipElement.className = 'ol-tooltip ol-tooltip-measure';
+      measureTooltip = new Overlay({
+        element: measureTooltipElement,
+        offset: [0, -15],
+        positioning: 'bottom-center',
+        stopEvent: false,
+        insertFirst: false,
+      });
+      measureTooltipMap.push(measureTooltip)
+      map.addOverlay(measureTooltip);
+    }
 
     // 测面
-    // eslint-disable-next-line no-unused-vars
     const formatArea = (polygon) => {
-      const area = getArea(polygon);
+      const sourceProj = map.getView().getProjection();//获取投影坐标系
+      const area = getArea(polygon, { projection: sourceProj });
       let output;
       if (area > 10000) {
         output = Math.round((area / 1000000) * 100) / 100 + ' ' + 'km<sup>2</sup>';
@@ -145,7 +170,18 @@ export default {
       return output;
     };
     let draw = createDraw();
+    const pointerMoveHandler = function (evt) {
+      if (evt.dragging) {
+        return;
+      }
+      /** @type {string} */
+      let helpMsg = '单击开始绘制，双击结束';
 
+      helpTooltipElement.innerHTML = helpMsg;
+      helpTooltip.setPosition(evt.coordinate);
+
+      helpTooltipElement.classList.remove('hidden');
+    };
     watch([type,
       clickTolerance,
       dragVertexDelay,
@@ -159,29 +195,37 @@ export default {
       condition,
       freehand,
       freehandCondition,
-      wrapX
+      wrapX, disabled
     ], () => {
-
       map.removeInteraction(draw);
       draw = createDraw();
       map.addInteraction(draw);
+      source.value.clear()
+      map.removeOverlay(helpTooltip)
+      map.removeOverlay(measureTooltip)
+      measureTooltip.setPosition(undefined)
+      createHelpTooltip();
       draw.changed()
-
       map.changed()
+      map.on('pointermove', pointerMoveHandler);
     })
-
-
     onMounted(() => {
       map.addInteraction(draw);
+      createHelpTooltip();
 
+      map.on('pointermove', pointerMoveHandler);
     });
 
     onUnmounted(() => {
+      map.removeOverlay(helpTooltip)
+      measureTooltipMap.forEach(x => {
+        map.removeOverlay(x)
+      })
       map.removeInteraction(draw);
+      map.un('pointermove', pointerMoveHandler)
     });
 
     provide('stylable', draw)
-    return { overLayOptions }
 
   },
   props: {
@@ -253,6 +297,10 @@ export default {
     isMeasure: {
       type: Boolean,
       default: false
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   }
 
@@ -263,5 +311,40 @@ export default {
 .overlay-content {
   background: rgba(255, 255, 255, 0.5);
   padding: 0 10px;
+}
+.ol-tooltip {
+  position: relative;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+  color: white;
+  padding: 4px 8px;
+  opacity: 0.7;
+  white-space: nowrap;
+  font-size: 12px;
+  cursor: default;
+  user-select: none;
+}
+.ol-tooltip-measure {
+  opacity: 1;
+  font-weight: bold;
+}
+.ol-tooltip-static {
+  background-color: #ffcc33;
+  color: black;
+  border: 1px solid white;
+}
+.ol-tooltip-measure:before,
+.ol-tooltip-static:before {
+  border-top: 6px solid rgba(0, 0, 0, 0.5);
+  border-right: 6px solid transparent;
+  border-left: 6px solid transparent;
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  margin-left: -7px;
+  left: 50%;
+}
+.ol-tooltip-static:before {
+  border-top-color: #ffcc33;
 }
 </style>
