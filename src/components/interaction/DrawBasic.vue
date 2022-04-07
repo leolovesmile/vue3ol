@@ -27,7 +27,7 @@ export default {
   setup (props, {
     emit
   }) {
-
+    const measureTooltipMap = []
     const map = inject("map");
     const source = inject("vectorSource");
     let measureTooltipElement;
@@ -153,6 +153,7 @@ export default {
         stopEvent: false,
         insertFirst: false,
       });
+      measureTooltipMap.push(measureTooltip)
       map.addOverlay(measureTooltip);
     }
 
@@ -211,10 +212,15 @@ export default {
     onMounted(() => {
       map.addInteraction(draw);
       createHelpTooltip();
+
       map.on('pointermove', pointerMoveHandler);
     });
 
     onUnmounted(() => {
+      map.removeOverlay(helpTooltip)
+      measureTooltipMap.forEach(x => {
+        map.removeOverlay(x)
+      })
       map.removeInteraction(draw);
       map.un('pointermove', pointerMoveHandler)
     });

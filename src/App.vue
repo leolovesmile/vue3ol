@@ -168,7 +168,7 @@
     <ol-webglpoints-layer :style="webglPointsStyle">
       <ol-source-webglpoints :format="geoJson" url="https://openlayers.org/en/latest/examples/data/geojson/world-cities.geojson" />
     </ol-webglpoints-layer>
-    <ol-vector-layer>
+    <ol-vector-layer v-if="disabled">
       <ol-source-vector :projection="projection">
         <ol-basic-draw isMeasure :type="'Polygon'" stopClick />
       </ol-source-vector>
@@ -181,6 +181,7 @@
       </ol-style>
     </ol-vector-layer>
   </ol-map>
+  <a @click="disabled=!disabled">aaaa</a>
 </template>
 
 <script>
@@ -195,6 +196,7 @@ import starIcon from '@/assets/star.png'
 export default {
   setup () {
     const center = ref([34, 39.13])
+    const disabled = ref(false)
     const projection = ref('EPSG:4326')
     const zoom = ref(6)
     const rotation = ref(0)
@@ -391,7 +393,7 @@ export default {
       },
     }
     return {
-
+      disabled,
       center,
       projection,
       zoom,
