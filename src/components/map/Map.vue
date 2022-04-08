@@ -1,5 +1,13 @@
 <template lang="">
-    <vc-viewer v-if='cesiumEngine'></vc-viewer>
+    <vc-viewer v-if='rsMapVue3OlGlobalConfig.isCesiumEngine' :showCredit='false' :skeleton='true' :fullscreenButton	="true" :homeButton="true" :baseLayerPicker='true'>
+        <vc-layer-imagery :alpha="1" :brightness="1" :contrast="1" :sort-order="20" v-if="rsMapVue3OlGlobalConfig.hasTiandituToken">
+            <vc-imagery-provider-tianditu map-style="cva_c" :token="rsMapVue3OlGlobalConfig.tiandituToken"></vc-imagery-provider-tianditu>
+        </vc-layer-imagery>
+        <vc-layer-imagery :alpha="1" :brightness="1" :contrast="1" :sort-order="10" v-if="rsMapVue3OlGlobalConfig.hasTiandituToken">
+            <vc-imagery-provider-tianditu :map-style="rsMapVue3OlGlobalConfig.tiandituLayer" :token="rsMapVue3OlGlobalConfig.tiandituToken"></vc-imagery-provider-tianditu>
+        </vc-layer-imagery>
+        <slot></slot>
+    </vc-viewer>
 <div :ref="el => mapRef = el" v-else>
     <slot></slot>
 </div>
@@ -11,12 +19,12 @@ import {
     provide,
     onMounted,
     onUnmounted,
-    watch,
-    computed
+    watch
 } from "vue";
 
 import Map from "ol/Map";
 import usePropsAsObjectProperties from '@/composables/usePropsAsObjectProperties'
+import use3DMap from '@/3dcomponents/composables/use3DMap'
 
 export default {
     name: 'ol-map',
@@ -39,10 +47,10 @@ export default {
 
         });
 
-        const cesiumEngine = computed(()=>props.mapEngine === 'cesium')
+        const rsMapVue3OlGlobalConfig = use3DMap(props, emit)
 
         onMounted(() => {
-            if(cesiumEngine.value) {
+            if(rsMapVue3OlGlobalConfig.isCesiumEngine) {
                 console.log('using 3d map engine instead of openlayers')
             } else {
                 map.setTarget(mapRef.value);
@@ -86,7 +94,7 @@ export default {
             refresh,
             render,
             updateSize,
-            cesiumEngine
+            rsMapVue3OlGlobalConfig
         }
     },
     props: {
@@ -111,8 +119,7 @@ export default {
             default:()=>[]
         },
         mapEngine: {
-            type: String,
-            default: 'ol'
+            type: String
         }
 
     },

@@ -5,15 +5,17 @@
 </template>
 
 <script>
+import {inject} from 'vue'
 import useView from '@/composables/useView'
+import use3dView from '@/3dcomponents/composables/use3DView'
 
 export default {
     name: 'ol-view',
     setup(props, {
         emit
     }) {
-
-        const view = useView(props, emit);
+        const rsMapVue3OlGlobalConfig = inject('rsMapVue3OlGlobalConfig')
+        const view =  rsMapVue3OlGlobalConfig.isCesiumEngine ? use3dView(props, emit) : useView(props, emit);
 
         return {
             ...view

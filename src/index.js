@@ -16,10 +16,6 @@ import 'ol-ext/dist/ol-ext.css'
 import 'ol-contextmenu/dist/ol-contextmenu.css'
 import './assets/style.css'
 
-import VueCesium from 'vue-cesium'
-import 'vue-cesium/dist/index.css'
-import zhCN from 'vue-cesium/es/locale/lang/zh-hans'
-
 import feature from 'ol/Feature';
 import * as geom from 'ol/geom/';
 import * as format from 'ol/format';
@@ -27,6 +23,8 @@ import * as loadingstrategy from 'ol/loadingstrategy';
 import * as selectconditions from 'ol/events/condition';
 import * as extent from 'ol/extent';
 import * as animations from 'ol/easing'
+
+import install3DEngine from './3dcomponents/composables/install3DEngine'
 
 export default function install(app) {
     
@@ -37,17 +35,7 @@ export default function install(app) {
 
     install.installed = true
 
-    // register VueCesium components 
-    const vueCesiumConfig = {
-        accessToken: window.CESIUM_ION_ACCESS_TOKEN?? 'your Cesium Ion access token',
-        locale: zhCN
-    }
-    if(!window.CESIUM_BASE_URL) {
-        console.warn('window.CESIUM_BASE_URL is not defined, use Cesium.js module in CDN')
-    } else {
-        vueCesiumConfig.cesiumPath = `${window.CESIUM_BASE_URL}/Cesium.js`
-    }
-    app.use(VueCesium, vueCesiumConfig)
+    install3DEngine(app)
 
     app.use(Map)
     app.use(Layers)
