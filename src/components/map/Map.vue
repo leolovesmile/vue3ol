@@ -1,5 +1,6 @@
 <template lang="">
-<div :ref="el => mapRef = el">
+    <vc-viewer v-if='cesiumEngine'></vc-viewer>
+<div :ref="el => mapRef = el" v-else>
     <slot></slot>
 </div>
 </template>
@@ -10,7 +11,8 @@ import {
     provide,
     onMounted,
     onUnmounted,
-    watch
+    watch,
+    computed
 } from "vue";
 
 import Map from "ol/Map";
@@ -37,8 +39,14 @@ export default {
 
         });
 
+        const cesiumEngine = computed(()=>props.mapEngine === 'cesium')
+
         onMounted(() => {
-            map.setTarget(mapRef.value);
+            if(cesiumEngine.value) {
+                console.log('using 3d map engine instead of openlayers')
+            } else {
+                map.setTarget(mapRef.value);
+            }
         });
 
         onUnmounted(() => {
@@ -77,7 +85,8 @@ export default {
             getCoordinateFromPixel,
             refresh,
             render,
-            updateSize
+            updateSize,
+            cesiumEngine
         }
     },
     props: {
@@ -100,6 +109,10 @@ export default {
         controls:{
             type:Array,
             default:()=>[]
+        },
+        mapEngine: {
+            type: String,
+            default: 'ol'
         }
 
     },
