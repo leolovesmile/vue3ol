@@ -29,11 +29,18 @@ export default {
         const webglPointsLayer = computed(() => new WebGLPointsLayer(properties));
         watch(properties, () => {
             webglPointsLayer.value.setProperties(properties);
+            // TODO: bug - `setVisible` does not work for webglPointsLayer
+            // webglPointsLayer.value.setVisible(properties.visible);
         });
         onMounted(() => {
             map.addLayer(webglPointsLayer.value);
         });
         onUnmounted(() => {
+            try {
+                webglPointsLayer.value.dispose();
+            } catch (e) {
+                console.error(`get error ${e} when try to dispose webgl points layer`);
+            }
             map.removeLayer(webglPointsLayer.value)
         });
         provide('webglPointsLayer', webglPointsLayer);
@@ -57,6 +64,10 @@ export default {
                 }
             })
         },
+        // visible: {
+        //     type: Boolean,
+        //     default: true
+        // }
     }
 }
 </script>

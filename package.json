@@ -1,6 +1,6 @@
 {
   "name": "@rsmap/vue3ol",
-  "version": "0.3.72",
+  "version": "0.4.2",
   "description": "使用 vue3 风格封装后的 Openlayer 地图组件库。",
   "repository": {
     "type": "git",
@@ -28,7 +28,8 @@
     "build": "vue-cli-service build --target lib --name vue3ol src/index.js",
     "build:dev": "vue-cli-service build --debug --devtool cheap-module-eval-source-map --target lib --name vue3ol src/index.js",
     "build-report": "vue-cli-service build --report",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "release": "npm publish --registry https://registry.npmjs.org  --access public"
   },
   "files": [
     "dist/*"

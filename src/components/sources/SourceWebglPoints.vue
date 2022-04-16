@@ -13,7 +13,8 @@ import {
     onMounted,
     onUnmounted,
     provide,
-    computed
+    computed,
+    markRaw
 } from 'vue'
 
 import usePropsAsObjectProperties from '@/composables/usePropsAsObjectProperties'
@@ -24,6 +25,8 @@ export default {
 
         const layer = inject('webglPointsLayer');
 
+        markRaw(props.features)
+
         const {
             properties
         } = usePropsAsObjectProperties(props);
@@ -32,10 +35,13 @@ export default {
 
         const applySource = () => {
             layer.value.setSource(null)
+            // TODO: bug - the layer is not updated if the `features` or `url` properties are changed
             layer.value.setSource(source.value)
             layer.value.changed()
         };
         watch(properties, () => {
+            console.log('watch(properties')
+            // TODO: bug - if the `features` property is changed, this watcher will be called twice
             applySource();
 
         })
@@ -49,6 +55,11 @@ export default {
         });
 
         onUnmounted(() => {
+            try {
+                source.value.dispose()
+            } catch (e) {
+                console.error(`get error ${e} when try to dispose webgl points`);
+            }
             layer.value.setSource(null)
         });
 
