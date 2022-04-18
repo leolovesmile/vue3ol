@@ -37,9 +37,9 @@ export default {
     const size = computed(() => getWidth(extent.value) / 256);
 
     const getTileGrid = computed(() => {
-      const resolutions = new Array(19);
-      const matrixIds = new Array(19);
-      for (let z = 0; z < 19; ++z) {
+      const resolutions = new Array(30);
+      const matrixIds = new Array(30);
+      for (let z = 0; z < 30; ++z) {
         resolutions[z] = size.value / Math.pow(2, z);
         matrixIds[z] = z;
       }

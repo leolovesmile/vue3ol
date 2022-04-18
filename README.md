@@ -40,6 +40,9 @@ declare module '@rsmap/vue3ol'
 - 接下来便可以使用本组件库了
 
 ## change logs
+### 2022 年 4 月 18 日
+- `ol-source-wmts`组件的调整TileGrid默认的最高级别
+
 ### 2022 年 4 月 16 日
 
 - `ol-webglpoints-layer`与`ol-source-webglpoints`组件的调优， 主动dispose资源，以及调整使用`features`属性时的性能
