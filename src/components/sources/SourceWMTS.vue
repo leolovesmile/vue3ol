@@ -27,7 +27,7 @@ import {
 import usePropsAsObjectProperties from '@/composables/usePropsAsObjectProperties'
 export default {
   name: 'ol-source-wmts',
-  setup (props) {
+  setup(props) {
     const tileLayer = inject('tileLayer')
     const {
       properties
@@ -59,10 +59,10 @@ export default {
           throw 'http error when trying to get wmts meta info'
         }
         const wmtsXml = await response.text();
-        if(wmtsXml.indexOf('<Capabilities') < 0){
+        if (wmtsXml.indexOf('<Capabilities') < 0) {
           throw 'it looks like that this is not a valid wmts Capabilities xml file'
         }
-        
+
         const result = parser.read(wmtsXml);
 
         // use the first layer by default if no layer is specified
@@ -99,7 +99,8 @@ export default {
         }),
         tileGrid: properties.tileGrid || getTileGrid.value,
         ...wmtsOptionFromCapabilitiesUrl.value,
-        wrapX: properties.wrapX
+        wrapX: properties.wrapX,
+        crossOrigin: properties.crossOrigin
       })
     })
 
