@@ -40,6 +40,9 @@ declare module '@rsmap/vue3ol'
 - 接下来便可以使用本组件库了
 
 ## change logs
+### 2022 年 5 月 17 日
+- `ol-source-wmts`组件修复crossOrigin赋值失效Bug
+
 ### 2022 年 4 月 18 日
 - `ol-source-wmts`组件的调整TileGrid默认的最高级别
 
