@@ -6,6 +6,7 @@ import * as Geometries from './geometries'
 import * as Styles from './styles'
 import * as Interactions from './interaction'
 import * as Animations from './animations'
+import * as Filters from './filters'
 export {
     Map,
     Layers,
@@ -14,5 +15,6 @@ export {
     Geometries,
     Styles,
     Interactions,
-    Animations
+    Animations,
+    Filters
 }

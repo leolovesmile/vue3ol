@@ -6,7 +6,8 @@ import {
     Geometries,
     Styles,
     Interactions,
-    Animations
+    Animations,
+    Filters
 } from './components'
 
 
@@ -41,8 +42,8 @@ export default function install(app) {
     app.use(Styles);
     app.use(Interactions);
     app.use(Animations);
+    app.use(Filters)
 
-    
     app.provide('ol-feature',feature)
     app.provide('ol-geom',geom)
     app.provide('ol-animations',animations)
