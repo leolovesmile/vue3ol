@@ -40,6 +40,9 @@ declare module '@rsmap/vue3ol'
 - 接下来便可以使用本组件库了
 
 ## change logs
+### 2022 年 6 月 02 日
+- 新增control `ol-zoom-level-control`， 用于显示当前map的zoom level
+
 ### 2022 年 5 月 25 日
 - 新增两个组件 `ol-filter-mask` 与 `ol-filter-crop`， 用于在图层上添加蒙板或者对图层进行裁剪
 

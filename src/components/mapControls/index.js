@@ -1,5 +1,6 @@
 import FullScreenControl from './FullScreenControl.vue'
 import MousePositionControl from './MousePositionControl.vue'
+import ZoomLevelControl from './ZoomLevelControl.vue'
 import AttributionControl from './AttributionControl.vue'
 import OverviewMapControl from './OverviewMapControl.vue'
 import ScaleLineControl from './ScaleLineControl.vue'
@@ -27,6 +28,7 @@ function install (app) {
   
     app.component(FullScreenControl.name, FullScreenControl)
     app.component(MousePositionControl.name, MousePositionControl)
+    app.component(ZoomLevelControl.name, ZoomLevelControl)
     app.component(AttributionControl.name, AttributionControl)
     app.component(OverviewMapControl.name, OverviewMapControl)
     app.component(ScaleLineControl.name, ScaleLineControl)
