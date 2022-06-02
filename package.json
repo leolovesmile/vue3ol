@@ -1,6 +1,6 @@
 {
   "name": "@rsmap/vue3ol",
-  "version": "0.4.6",
+  "version": "0.4.7",
   "description": "使用 vue3 风格封装后的 Openlayer 地图组件库。",
   "repository": {
     "type": "git",

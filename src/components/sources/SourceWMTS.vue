@@ -200,9 +200,10 @@ export default {
     },
     tileGrid: {
       type: Object
+    },
+    tileLoadFunction: {
+      type: Function
     }
   }
 }
 </script>
-
-
