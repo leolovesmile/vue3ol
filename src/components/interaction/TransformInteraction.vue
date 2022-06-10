@@ -6,12 +6,12 @@
 
 <script>
 import {
-    provide,
-    inject,
-    watch,
-    onMounted,
-    onUnmounted,
-    computed
+  provide,
+  inject,
+  watch,
+  onMounted,
+  onUnmounted,
+  computed
 } from 'vue'
 
 import Transform from 'ol-ext/interaction/Transform';
@@ -19,95 +19,103 @@ import Transform from 'ol-ext/interaction/Transform';
 import usePropsAsObjectProperties from '@/composables/usePropsAsObjectProperties'
 
 export default {
-    name: 'ol-interaction-transform',
-    setup(props) {
+  name: 'ol-interaction-transform',
+  setup (props) {
 
-        const map = inject("map");
+    const map = inject("map");
 
-        const {
-            properties
-        } = usePropsAsObjectProperties(props);
+    const {
+      properties
+    } = usePropsAsObjectProperties(props);
 
-        let transform = computed(() => {
-            let interaction = new Transform({
-                ...properties,
-            });
+    let transform = computed(() => {
+      let interaction = new Transform({
+        ...properties,
+      });
 
-            return interaction;
-        });
+      return interaction;
+    });
 
-        watch(transform, (newVal, oldVal) => {
+    watch(transform, (newVal, oldVal) => {
 
-            map.removeInteraction(oldVal);
-            map.addInteraction(newVal);
+      map.removeInteraction(oldVal);
+      map.addInteraction(newVal);
 
-            map.changed()
-        })
+      map.changed()
+    })
 
-        onMounted(() => {
-            map.addInteraction(transform.value);
+    onMounted(() => {
+      map.addInteraction(transform.value);
 
-        });
+    });
 
-        onUnmounted(() => {
-            map.removeInteraction(transform.value);
-        });
+    onUnmounted(() => {
+      map.removeInteraction(transform.value);
+    });
 
-        provide('stylable', transform)
-    },
-    props: {
+    provide('stylable', transform)
 
-        enableRotatedTransform: {
-            type: Boolean,
-            default: false
-        },
-        condition: {
-            type: Function,
-
-        },
-        addCondition: {
-            type: Function,
-
-        },
-        filter: {
-            type: Function
-        },
-        layers: {
-            type: Array
-        },
-        hitTolerance: {
-            type: Number,
-            default: 2
-        },
-        translateFeature: {
-            type: Boolean,
-            default: true
-        },
-        scale: {
-            type: Boolean,
-            default: true
-        },
-        rotate: {
-            type: Boolean,
-            default: true
-        },
-        keepAspectRatio: {
-            type: Boolean,
-            default: false
-        },
-        translate: {
-            type: Boolean,
-            default: true
-        },
-        stretch: {
-            type: Boolean,
-            default: true
-        },
+    // 获取选中数据
+    const getSelectedFeatures = () => {
+      return transform.value.getFeatures()
     }
+
+    return {
+      transform, getSelectedFeatures
+    }
+  },
+  props: {
+
+    enableRotatedTransform: {
+      type: Boolean,
+      default: false
+    },
+    condition: {
+      type: Function,
+
+    },
+    addCondition: {
+      type: Function,
+
+    },
+    filter: {
+      type: Function
+    },
+    layers: {
+      type: Array
+    },
+    hitTolerance: {
+      type: Number,
+      default: 2
+    },
+    translateFeature: {
+      type: Boolean,
+      default: true
+    },
+    scale: {
+      type: Boolean,
+      default: true
+    },
+    rotate: {
+      type: Boolean,
+      default: true
+    },
+    keepAspectRatio: {
+      type: Boolean,
+      default: false
+    },
+    translate: {
+      type: Boolean,
+      default: true
+    },
+    stretch: {
+      type: Boolean,
+      default: true
+    },
+  }
 
 }
 </script>
 
 <style lang="">
-
 </style>

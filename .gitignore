@@ -24,3 +24,5 @@ pnpm-debug.log*
 *.sw?
 /.history
 src/App*copy.vue
+/src/AppLocalhost.vue
+/src/main.js
