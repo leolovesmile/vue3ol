@@ -1,0 +1,28 @@
+{
+  "tabWidth": 2,
+  "singleQuote": false,
+  "semi": true,
+  "trailingComma": "none",
+  "overrides": [
+    {
+      "files": [
+        "*.js",
+        "*.jsx",
+        "*.ts",
+        "*.tsx"
+      ],
+      "options": {
+        "printWidth": 300
+      }
+    },
+    {
+      "files": [
+        "*.html",
+        "*.vue"
+      ],
+      "options": {
+        "printWidth": 120
+      }
+    }
+  ]
+}
