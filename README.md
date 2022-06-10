@@ -40,25 +40,35 @@ declare module '@rsmap/vue3ol'
 - 接下来便可以使用本组件库了
 
 ## change logs
-### 2022 年 6 月 02 日
-- 默认注册projection `EPSG:4490`
+
+### 2022 年 6 月 10 日
+
+- 组件`ol-interaction-transform` 增加方法 getSelectedFeatures 获取选中 layer 的 features
 
 ### 2022 年 6 月 02 日
-- 新增control `ol-zoom-level-control`， 用于显示当前map的zoom level
+
+- 默认注册 projection `EPSG:4490`
+
+### 2022 年 6 月 02 日
+
+- 新增 control `ol-zoom-level-control`， 用于显示当前 map 的 zoom level
 - 组件`ol-source-wmts`增加配置项`tileLoadFunction`
 
 ### 2022 年 5 月 25 日
+
 - 新增两个组件 `ol-filter-mask` 与 `ol-filter-crop`， 用于在图层上添加蒙板或者对图层进行裁剪
 
 ### 2022 年 5 月 17 日
-- `ol-source-wmts`组件修复crossOrigin赋值失效Bug
+
+- `ol-source-wmts`组件修复 crossOrigin 赋值失效 Bug
 
 ### 2022 年 4 月 18 日
-- `ol-source-wmts`组件的调整TileGrid默认的最高级别
+
+- `ol-source-wmts`组件的调整 TileGrid 默认的最高级别
 
 ### 2022 年 4 月 16 日
 
-- `ol-webglpoints-layer`与`ol-source-webglpoints`组件的调优， 主动dispose资源，以及调整使用`features`属性时的性能
+- `ol-webglpoints-layer`与`ol-source-webglpoints`组件的调优， 主动 dispose 资源，以及调整使用`features`属性时的性能
 
 ### 2022 年 4 月 7 日
 

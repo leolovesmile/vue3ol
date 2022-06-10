@@ -1,6 +1,5 @@
 <template lang="">
 <slot>
-
 </slot>
 </template>
 
@@ -56,9 +55,9 @@ export default {
     provide('stylable', transform)
 
     // 获取选中数据
-    const getSelectedFeatures = () => {
+    const getSelectedFeatures = computed(() => {
       return transform.value.getFeatures()
-    }
+    });
 
     return {
       transform, getSelectedFeatures
