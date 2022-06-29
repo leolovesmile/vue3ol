@@ -1,5 +1,5 @@
 <template>
-  <ol-map ref="map" :loadTilesWhileAnimating="true" :loadTilesWhileInteracting="true" style="height:800px">
+  <ol-map ref="map" style="height:800px">
 
     <ol-view ref="view" :center="center" :rotation="rotation" :zoom="zoom" :projection="projection" />
 

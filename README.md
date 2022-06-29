@@ -41,6 +41,10 @@ declare module '@rsmap/vue3ol'
 
 ## change logs
 
+### 2022 年 6 月 29 日
+
+- `Map`组件移除掉了两个 openlayers 6.0 后已弃用的参数 `loadTilesWhileAnimating`与`loadTilesWhileInteracting`
+
 ### 2022 年 6 月 10 日
 
 - 组件`ol-interaction-transform` 增加方法 getSelectedFeatures 获取选中 layer 的 features

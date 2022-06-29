@@ -81,14 +81,6 @@ export default {
         }
     },
     props: {
-        loadTilesWhileAnimating: {
-            type: Boolean,
-            default: false
-        },
-        loadTilesWhileInteracting: {
-            type: Boolean,
-            default: false
-        },
         moveTolerance: {
             type: Number,
             default: 1
