@@ -41,6 +41,10 @@ declare module '@rsmap/vue3ol'
 
 ## change logs
 
+### 2022 年 7 月 25 日
+
+- `ol-style-text`组件增加 `backgroundFill` 和 `backgroundStroke` 属性
+
 ### 2022 年 6 月 29 日
 
 - `Map`组件移除掉了两个 openlayers 6.0 后已弃用的参数 `loadTilesWhileAnimating`与`loadTilesWhileInteracting`
