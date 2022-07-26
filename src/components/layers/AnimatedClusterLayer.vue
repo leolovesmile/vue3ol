@@ -5,101 +5,114 @@
 </template>
 
 <script>
-import {
-    inject,
-    provide,
-    onUnmounted,
-    onMounted,
-    watch,
-    computed
-} from 'vue'
-import {
-    Cluster
-} from 'ol/source';
-import {
-    easeOut
-} from 'ol/easing'
+import { inject, provide, onUnmounted, onMounted, watch, computed } from "vue";
+import { Cluster } from "ol/source";
+import { easeOut } from "ol/easing";
 
-import AnimatedCluster from "ol-ext/layer/AnimatedCluster"
-import usePropsAsObjectProperties from '@/composables/usePropsAsObjectProperties'
-import BaseLayer from "./BaseLayer"
+import AnimatedCluster from "ol-ext/layer/AnimatedCluster";
+import usePropsAsObjectProperties from "@/composables/usePropsAsObjectProperties";
+import BaseLayer from "./BaseLayer";
+import { max } from "lodash";
+
 export default {
-    extends: BaseLayer,
-    name: 'ol-animated-clusterlayer',
+  extends: BaseLayer,
+  name: "ol-animated-clusterlayer",
 
-    setup(props) {
+  setup(props) {
+    const map = inject("map");
 
-        const map = inject('map');
+    const { properties } = usePropsAsObjectProperties(props);
 
-        const {
-            properties
-        } = usePropsAsObjectProperties(props);
+    const vectorLayer = computed(() => {
+      let ac = new AnimatedCluster({
+        ...properties,
+        source: new Cluster({
+          distance: properties.distance,
+          geometryFunction: (feature) => feature.getGeometry()
+        })
+      });
 
-        const vectorLayer = computed(() => {
-            let ac = new AnimatedCluster({
-                ...properties,
-                source: new Cluster({
-                    distance: properties.distance,
-                    geometryFunction: (feature) => feature.getGeometry()
-                })
-            });
+      return ac;
+    });
 
-            return ac;
-        });
+    const source = computed(() => vectorLayer.value.getSource());
 
-        const source = computed(() => vectorLayer.value.getSource());
+    watch(properties, () => {
+      vectorLayer.value.setProperties(properties);
+      vectorLayer.value.changed();
+    });
 
-        watch(properties, () => {
+    const applyLayer = () => {
+      if (properties.zIndexRange && !vectorLayer.value.getZIndex()) {
+        const mapZLevelRange = map.get("zLevelRange");
+        const minLevel = mapZLevelRange?.[properties.zIndexRange]?.[0];
+        if (minLevel) vectorLayer.value.setZIndex(minLevel);
+      }
+      vectorLayer.value.setProperties({ pin: pin });
 
-            vectorLayer.value.setProperties(properties);
-            vectorLayer.value.changed();
+      map.addLayer(vectorLayer.value);
+      vectorLayer.value.changed();
+      map.changed();
+    };
 
-        });
+    const removeLayer = () => {
+      map.removeLayer(vectorLayer.value);
+    };
 
-        onMounted(() => {
+    const pin = () => {
+      const mapZLevelRange = map.get("zLevelRange");
+      const minLevel = mapZLevelRange?.[props.zIndexRange]?.[0];
+      const sameRangeLayers = map.getAllLayers().filter((l) => l.get("zIndexRange") === props.zIndexRange);
+      if (minLevel) {
+        const maxLayerZIndex = max(sameRangeLayers.map((x) => x.getZIndex() || 0));
+        vectorLayer.value.setZIndex(maxLayerZIndex + 1);
+        applyLayer();
+        removeLayer();
+      } else {
+        throw "未找到对应层级范围！";
+      }
+    };
 
-            map.addLayer(vectorLayer.value);
-            vectorLayer.value.changed();
-            map.changed();
-        });
+    onMounted(() => {
+      applyLayer();
+    });
 
-        onUnmounted(() => {
-            map.removeLayer(vectorLayer.value)
-        });
+    onUnmounted(() => {
+      removeLayer();
+    });
 
-        provide('vectorLayer', source);
-        provide('stylable', vectorLayer);
+    provide("vectorLayer", source);
+    provide("stylable", vectorLayer);
 
-        return {
-            vectorLayer,
-            map
-        }
+    return {
+      vectorLayer,
+      map
+    };
+  },
+  props: {
+    animationDuration: {
+      type: Number,
+      default: 700
     },
-    props: {
-        animationDuration: {
-            type: Number,
-            default: 700
-        },
-        distance: {
-            type: Number,
-            default: 20
-        },
-        animationMethod: {
-            type: Function,
-            default: easeOut
-        },
-        updateWhileAnimating: {
-            type: Boolean,
-            default: false
-        },
-        updateWhileInteracting: {
-            type: Boolean,
-            default: false
-        },
+    distance: {
+      type: Number,
+      default: 20
+    },
+    animationMethod: {
+      type: Function,
+      default: easeOut
+    },
+    updateWhileAnimating: {
+      type: Boolean,
+      default: false
+    },
+    updateWhileInteracting: {
+      type: Boolean,
+      default: false
     }
-}
+  }
+};
 </script>
 
 <style lang="">
-
 </style>
