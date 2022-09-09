@@ -41,9 +41,14 @@ declare module '@rsmap/vue3ol'
 
 ## change logs
 
+### 2022 年 9 月 8 日
+
+- `ol-tile-layer`组件增加四个事件 `postrender`, `prerender`, `propertychange`, `change`, `moveend`
+- 升级 openlayers 和 ol-ext 的版本
+
 ### 2022 年 7 月 26 日
 
-- `ol-map`组件以及各个Layer增加 `zIndexRange` 属性, 各个Layer增加 `pin()` 方法, 对图层zIndex范围进行控制
+- `ol-map`组件以及各个 Layer 增加 `zIndexRange` 属性, 各个 Layer 增加 `pin()` 方法, 对图层 zIndex 范围进行控制
 
 ### 2022 年 7 月 25 日
 

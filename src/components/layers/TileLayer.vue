@@ -14,13 +14,21 @@ import { max } from "lodash";
 export default {
   extends: BaseLayer,
   name: "ol-tile-layer",
-  setup(props) {
+  setup(props, { emit }) {
     const map = inject("map");
     const overViewMap = inject("overviewMap", null);
 
     const { properties } = usePropsAsObjectProperties(props);
 
-    const tileLayer = computed(() => new TileLayer(properties));
+    const tileLayer = computed(() => {
+      const tilelayer = new TileLayer(properties);
+      tilelayer.on("postrender", (event) => emit("postrender", event));
+      tilelayer.on("prerender", (event) => emit("prerender", event));
+      tilelayer.on("propertychange", (event) => emit("propertychange", event));
+      tilelayer.on("change", (event) => emit("change", event));
+
+      return tilelayer;
+    });
 
     const applyTileLayer = () => {
       if (properties.zIndexRange && !tileLayer.value.getZIndex()) {
@@ -67,11 +75,15 @@ export default {
       });
     }
 
+    const moveendEventListener = (event) => emit("moveend", event);
+
     onMounted(() => {
+      map.on("moveend", moveendEventListener);
       applyTileLayer();
     });
 
     onUnmounted(() => {
+      map.un("moveend", moveendEventListener);
       removeTileLayer();
     });
 
