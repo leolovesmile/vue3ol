@@ -41,9 +41,11 @@ declare module '@rsmap/vue3ol'
 
 ## change logs
 
+- `ol-tile-layer`组件的事件 `moveend` 触发时机调整，并且在事件对象中增加图层信息
+
 ### 2022 年 9 月 8 日
 
-- `ol-tile-layer`组件增加四个事件 `postrender`, `prerender`, `propertychange`, `change`, `moveend`
+- `ol-tile-layer`组件增加五个事件 `postrender`, `prerender`, `propertychange`, `change`, `moveend`
 - 升级 openlayers 和 ol-ext 的版本
 
 ### 2022 年 7 月 26 日

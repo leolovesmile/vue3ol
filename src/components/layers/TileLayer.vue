@@ -14,6 +14,7 @@ import { max } from "lodash";
 export default {
   extends: BaseLayer,
   name: "ol-tile-layer",
+  emits: ["postrender", "prerender", "propertychange", "change", "moveend"],
   setup(props, { emit }) {
     const map = inject("map");
     const overViewMap = inject("overviewMap", null);
@@ -30,21 +31,6 @@ export default {
       return tilelayer;
     });
 
-    const applyTileLayer = () => {
-      if (properties.zIndexRange && !tileLayer.value.getZIndex()) {
-        const mapZLevelRange = map.get("zLevelRange");
-        const minLevel = mapZLevelRange?.[properties.zIndexRange]?.[0];
-        if (minLevel) tileLayer.value.setZIndex(minLevel);
-      }
-      tileLayer.value.setProperties({ pin: pin });
-      if (overViewMap != null) {
-        overViewMap.value.getOverviewMap().addLayer(tileLayer.value);
-        overViewMap.value.changed();
-      } else {
-        map.addLayer(tileLayer.value);
-      }
-    };
-
     const pin = () => {
       const mapZLevelRange = map.get("zLevelRange");
       const minLevel = mapZLevelRange?.[props.zIndexRange]?.[0];
@@ -59,13 +45,33 @@ export default {
       }
     };
 
+    const applyTileLayer = () => {
+      if (properties.zIndexRange && !tileLayer.value.getZIndex()) {
+        const mapZLevelRange = map.get("zLevelRange");
+        const minLevel = mapZLevelRange?.[properties.zIndexRange]?.[0];
+        if (minLevel) tileLayer.value.setZIndex(minLevel);
+      }
+      tileLayer.value.setProperties({ pin: pin });
+      if (overViewMap != null) {
+        overViewMap.value.getOverviewMap().addLayer(tileLayer.value);
+        overViewMap.value.changed();
+      } else {
+        map.addLayer(tileLayer.value);
+      }
+
+      map.on("moveend", moveendEventListener);
+    };
+
     const removeTileLayer = () => {
       if (overViewMap != null) {
         overViewMap.value.getOverviewMap().removeLayer(tileLayer.value);
         overViewMap.value.changed();
       } else {
+        // TODO: check if this is a bug - whether the layer is only removed from overview map in this case?
         map.removeLayer(tileLayer.value);
       }
+
+      map.un("moveend", moveendEventListener);
     };
 
     if (overViewMap != null) {
@@ -75,15 +81,13 @@ export default {
       });
     }
 
-    const moveendEventListener = (event) => emit("moveend", event);
+    const moveendEventListener = (event) => emit("moveend", Object.assign(event, { layer: tileLayer.value }));
 
     onMounted(() => {
-      map.on("moveend", moveendEventListener);
       applyTileLayer();
     });
 
     onUnmounted(() => {
-      map.un("moveend", moveendEventListener);
       removeTileLayer();
     });
 
